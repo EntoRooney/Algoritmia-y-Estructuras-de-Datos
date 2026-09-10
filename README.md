@@ -4,7 +4,7 @@
 >
 > Aquí encontrarás ejercicios, prácticas y exámenes de ciclos pasados, con sus respectivas soluciones y explicaciones para entender cómo funcionan los algoritmos.
 >
-> Todo esto después de varias horas con Claude y Rawayana de fondo 😈
+> Todo esto después de varias horas con Claude y Rawayana/Nsqk de fondo 😈
 
 ---
 
