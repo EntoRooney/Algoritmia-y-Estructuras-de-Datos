@@ -6,6 +6,34 @@
 using namespace std;
 #include "Estudiante.h"
 #define NUM_ESTUDIANTE 8
+//FUNCIONES AUXILIARES QUE SOLO SIRVEN PARA LA IMPRESION
+
+//funcion auxiliar que cuenta cuantos estudiantes hay en un turno
+int contarEnTurno(int turno, int arrAsignacion[], int n) {
+    int cnt = 0;
+    for (int i = 0; i < n; i++) {
+        if (arrAsignacion[i] == turno) cnt++;
+    }
+    return cnt;
+}
+
+//funcion auxiliar que imprime los estudiantes de un turno con el formato "a, b y c"
+void imprimirTurno(int turno, int arrAsignacion[], int n) {
+    int total = contarEnTurno(turno, arrAsignacion, n);
+    int impreso = 0;
+    for (int i = 0; i < n; i++) {
+        if (arrAsignacion[i] == turno) {
+            cout << i + 1;
+            impreso++;
+            if (impreso < total - 1) {
+                cout << ", ";
+            } else if (impreso == total - 1) {
+                cout << " y ";
+            }
+        }
+    }
+}
+
 
 int main() {
     //invocamos la estructura para que se haga más facil
@@ -82,44 +110,16 @@ int main() {
     }
     //es solo formato de impresion uu
     cout << "Resultado obtenido: Puntaje maximo = " << puntajeMaximo << endl;
-    cout << "Una distribucion optima posible" << endl;
-
-    bool primera = false;
     cout << "Turno 1: Estudiantes ";
-    for (int d = 0; d < NUM_ESTUDIANTE; d++) {
-        if (arrMaximo[d] == 1) {
-            cout << d + 1;
-            if (!primera) {
-                cout << ",";
-                primera = true;
-            }
-        }
-    }
+    imprimirTurno(1, arrMaximo, NUM_ESTUDIANTE);
     cout << endl;
 
-    bool primera2 = false;
     cout << "Turno 2: Estudiantes ";
-    for (int d = 0; d < NUM_ESTUDIANTE; d++) {
-        if (arrMaximo[d] == 2) {
-            cout << d + 1;
-            if (!primera2) {
-                cout << ",";
-                primera2 = true;
-            }
-        }
-    }
+    imprimirTurno(2, arrMaximo, NUM_ESTUDIANTE);
     cout << endl;
 
-    bool primera3 = false;
     cout << "Turno 3: Estudiantes ";
-    for (int d = 0; d < NUM_ESTUDIANTE; d++) {
-        if (arrMaximo[d] == 3) {
-            cout << d + 1;
-            if (!primera3) {
-                cout << ",";
-                primera3 = true;
-            }
-        }
-    }
+    imprimirTurno(3, arrMaximo, NUM_ESTUDIANTE);
+    cout << endl;
     return 0;
 }
