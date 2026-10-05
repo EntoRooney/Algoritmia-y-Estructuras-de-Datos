@@ -1,0 +1,14 @@
+Harina preparada* 1401 5000
+Mantequilla* 1501 3500
+Huevos*  1201 40
+Aceite* 1601 2500
+Chocolate bitter* 1701 500
+Azucar blanca* 1301 3000
+Azucar en polvo* 1302 1000
+Cocoa* 1702 900
+Leche fresca* 1001 900
+Leche condensada* 1002 900
+Leche evaporada* 1003 900
+Crema de leche* 1004 1800
+Vainilla* 1101 100
+Limones* 3001 10
