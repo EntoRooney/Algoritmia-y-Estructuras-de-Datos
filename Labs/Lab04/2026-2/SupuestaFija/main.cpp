@@ -4,71 +4,56 @@
 
 using namespace std;
 
-int mezclar(int *ordenDeLlegada, int inicio, int medio, int final, int &fuertes) {
-    int p = medio + 1;
-    for (int i = inicio; i <= medio; i++) {
-        while (p <= final and ordenDeLlegada[i] > 2 * ordenDeLlegada[p])
-            p++;
-        fuertes += p - (medio + 1);
-    }
-
-    int *aux = new int[final - inicio + 1];
-    int i = inicio, j = medio + 1, z = 0;
-    int adelantamientos = 0;
-
-    while (i <= medio and j <= final) {
-        if (ordenDeLlegada[i] <= ordenDeLlegada[j]) {
-            aux[z++] = ordenDeLlegada[i++];
-        } else {
-            aux[z++] = ordenDeLlegada[j++];
-            adelantamientos += medio - i + 1;
+void ordenarSort(int *arr, int inicio, int medio, int final, int &adela, int &adelaFuerte) {
+    int size = final - inicio + 1;
+    int aux[size];
+    for (int i = 0; i < size; i++) aux[i] = arr[i + inicio];
+    int k = inicio;
+    int izq = 0, der = medio - inicio + 1,
+            izqMax = medio - inicio, derMax = final - inicio;
+    //caso fuerte
+    int izq2 = izq, der2 = der;
+    while (izq2 <= izqMax and der2 <= derMax) {
+        if (aux[der2] * 2 < aux[izq2]) der2++;
+        else {
+            adelaFuerte = adelaFuerte + (der2 - der);
+            izq2++;
         }
     }
-
-    while (i <= medio) {
-        aux[z++] = ordenDeLlegada[i++];
+    while (izq2 <= izqMax) {
+        adelaFuerte = adelaFuerte + (der2 - der);
+        izq2++;
     }
 
-    while (j <= final) {
-        aux[z++] = ordenDeLlegada[j++];
+    //caso normal
+    while (izq <= izqMax and der <= derMax) {
+        if (aux[izq] <= aux[der])arr[k++] = aux[izq++];
+        else {
+            arr[k++] = aux[der++];
+            adela = adela + (izqMax - izq) + 1;
+        }
     }
-
-    for (int e = 0; e < z; e++) {
-        ordenDeLlegada[inicio + e] = aux[e];
-    }
-    delete[] aux;
-    return adelantamientos;
+    while (izq <= izqMax) arr[k++] = aux[izq++];
+    while (der <= derMax) arr[k++] = aux[der++];
 }
 
-int contarAdelantamientos(int *ordenDeLlegada, int inicio, int final, int &fuertes) {
-    if (inicio >= final) return 0;
+void ordenar(int *arr, int inicio, int final, int &adela, int &adelaFuerte) {
+    if (inicio == final)return;
     int medio = (inicio + final) / 2;
-    int total = 0;
-    total += contarAdelantamientos(ordenDeLlegada, inicio, medio, fuertes);
-    total += contarAdelantamientos(ordenDeLlegada, medio + 1, final, fuertes);
-    total += mezclar(ordenDeLlegada, inicio, medio, final, fuertes);
-    return total;
-}
-
-void imprimir(int arr[], int n) {
-    for (int i = 0; i < n; i++) {
-        cout << arr[i] << ' ';
-    }
+    ordenar(arr, inicio, medio, adela, adelaFuerte);
+    ordenar(arr, medio + 1, final, adela, adelaFuerte);
+    ordenarSort(arr, inicio, medio, final, adela, adelaFuerte);
 }
 
 int main() {
-    int ordenLlegada[] = {3, 1, 4, 2};
-    int n = sizeof(ordenLlegada) / sizeof(ordenLlegada[0]);
+    int arr[] = {5, 4, 3, 2, 1};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    int adela = 0, adelaFuerte = 0;
 
-    cout << "Antes de ordenar: " << endl;
-    imprimir(ordenLlegada, n);
-
-    int fuertes = 0;
-
-    int nroAdelantamientos = contarAdelantamientos(ordenLlegada, 0, n - 1, fuertes);
-    cout << endl << "Despues de ordenar: " << endl;
-    imprimir(ordenLlegada, n);
-    cout << endl << "Adelantamientos: " << nroAdelantamientos << endl;
-    cout << "Fuertes: " << fuertes << endl;
+    ordenar(arr, 0, size - 1, adela, adelaFuerte);
+    cout << "Adelantamientos: " << adela << endl;
+    cout << "Adelantamientos fuertes: " << adelaFuerte << endl;
+    cout << "Dorsales ordenados: ";
+    for (int i = 0; i < size; i++) cout << arr[i] << " ";
     return 0;
 }
